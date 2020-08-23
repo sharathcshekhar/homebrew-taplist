@@ -32,6 +32,7 @@ Saple CURL command:
         --form 'remaining=10' \
         --form 'size=200' \
         --form 'dispensed=60'
+        --form 'access_key=wr_access_key'
 
 Since I have only two taps I am monitoring, the I have check in the App Script to ensure tap is either 1 or 2. You can modify as needed.
 You may see that the WebApp also timestamps and adds a rowId to each entry.
