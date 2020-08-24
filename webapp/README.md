@@ -26,13 +26,13 @@ So the write key is a much stronger security.
 Whenever POST is called on the Web App, one row is added to your spreadsheet. The POST accepts four self explanatory variables in a form data.
 Sample CURL command:
 		
-		curl  --request POST 'https://script.google.com/macros/s/xxxxxx/exec' \
-		--form 'action=addItem' \
-		--form 'tap=1' \
-		--form 'remaining=10' \
-		--form 'size=200' \
-		--form 'dispensed=60'
-		--form 'access_key=wr_access_key'
+	curl  --request POST 'https://script.google.com/macros/s/xxxxxx/exec' \
+	      --form 'action=addItem' \
+	      --form 'tap=1' \
+	      --form 'remaining=10' \
+	      --form 'size=200' \
+	      --form 'dispensed=60'
+	      --form 'access_key=wr_access_key'
 
 Since I have only two taps I am monitoring, I have a check in the App Script to ensure the tap is either 1 or 2. You can modify as needed.
 You may see that the WebApp also timestamps and adds a rowId to each entry.
@@ -41,14 +41,14 @@ You may see that the WebApp also timestamps and adds a rowId to each entry.
 GET API returns the last row in the spreadsheet. It takes action (which is always getRaw), access_key (rd_access_key that you set in properties), and tap (the tap number).
 Example CURL command:
 
-		curl --request GET 'https://script.google.com/macros/s/xxxxxx/exec?action=getRaw&access_key=top_secret&tap=1'
+	curl --request GET 'https://script.google.com/macros/s/xxxxxx/exec?action=getRaw&access_key=top_secret&tap=1'
 
 This gives you a JSON output like this:
 		
 	{
-		"date": "2020-08-23T17:55:55.753Z",
-		"dispensed": 6167,
-		"remaining": 3297,
-		"size": 9842,
-		"percent_available": 33.5
+	  "date": "2020-08-23T17:55:55.753Z",
+	  "dispensed": 6167,
+	  "remaining": 3297,
+	  "size": 9842,
+	  "percent_available": 33.5
 	}
