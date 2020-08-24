@@ -2,22 +2,24 @@
 
 1. Creating the App Script:
 	1. Go to https://script.google.com/home/start and create a new project
-	2. Copy the code in keglevel.js and paste it into the editor. 
+	2. Copy the code in `keglevel.js` and paste it into the editor. 
 2. Creating Spreadsheet:
 	1. Create a new blank Google spreadsheet, and create as many sheets within the spreadsheet as the number of taps you want to monitor.
 	2. Name the sub-sheets as Tap-1, Tap-2, ... Tap-n. 
-	3. In each sub-sheet, create these four columns: "Date, Id, Dispensed, Remaining, Size".
+	3. In each sub-sheet, create these four columns: `Date, Id, Dispensed, Remaining, Size`.
 	4. This spreadsheet will be your cloud database. Copy the URL of this sheet.
 3. Integrating Sheets and App Script: In the App Script project, there are three variables that you have to set in script properties
-(File > Project Properties > Script Properties)
-	1. url: This is the URL of the Google Spreadsheet you created in the previous step.
-	2. wr-access-key: This is like a password, you can set it to whatever you want. The string has to be passed as "access-key" with all POST calls to the webapp.
-	3. rd-access-key: The string has to be passed as "access-key" with all GET calls to the webapp.
+(`File > Project Properties > Script Properties`)
+	1. `url`: This is the URL of the Google Spreadsheet you created in the previous step.
+	2. `wr-access-key`: This is like a password, you can set it to whatever you want. The string has to be passed as `access_key` with all POST calls to the webapp.
+	3. `rd-access-key`: The string has to be passed as `access_key` with all GET calls to the webapp.
 4. Now deploy the WebApp with a new version, and get the URL of the WebApp. 
+5. Google will ask for permissions for the WebApp to access your spreadsheets, you'll have to grant it (Tip: you can use a dedicated Google account to host
+the Spreadsheet and the WebApp).
 
-Note: if you use this WebApp to build a taplist on a publicly hosted website, your rd-access-key will be exposed as it is needed to make the API call.
+Note: If you use this WebApp to build a taplist on a publicly hosted website, your `rd-access-key` will be exposed as it is needed to make the API call.
 So keep in mind that this is a very weak form of security. On the other hand, the write access key is used only inside your Android App and won't be exposed.
-So the write key is a much stronger security. 
+So the write key is a much stronger form of security. 
 
 
 # Working of the WebApp
