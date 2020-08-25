@@ -8,30 +8,28 @@
          
          function mlToGal(ml) {
   			return Math.round((ml/ 3780) * 100)/ 100 + 'G'
-		 }
+	    }
          
          function padZero(v) {
          	return v < 10 ? '0' + v : v;
          }
          
          function kegDataToStr(k) {
-         	var dt = new Date(k.date);
-            
-			var d = padZero(dt.getDate());
-			var m = padZero(dt.getMonth() + 1)
+		    var dt = new Date(k.date);
+		    var d = padZero(dt.getDate());
+		    var m = padZero(dt.getMonth() + 1)
             var mm = padZero(dt.getMinutes());
             
             var h = dt.getHours();
+	    	var ampm = h >= 12 ? 'PM' : 'AM';
 			h = h % 12;
   			h = h ? h : 12;
-            var ampm = h >= 12 ? 'PM' : 'AM';
             h = padZero(h)
-                        
-            
+
   			date = m + '-' + d + ' ' + h + ':' + mm + ' ' + ampm;
          	return 'Last Updated: ' + date +
-            		'\nRemaining: ' + mlToGal(k.remaining) +
-                    '\nDispensed: ' + mlToGal(k.dispensed)
+            	   '\nRemaining: ' + mlToGal(k.remaining) +
+                   '\nDispensed: ' + mlToGal(k.dispensed)
          }
          
          $(document).ready(function() {
@@ -43,7 +41,7 @@
          		$('#keg1-circle').attr('stroke-dasharray', k1.percent_available + ' 100');
                 $("#keg1-chart").attr('title', kegDataToStr(k1));
          	});
-            $.ajax({
+            	$.ajax({
          		url: webApp + params + "2"
          	}).then(function(k2) {
         	 	$('#keg2-percent').append(k2.percent_available + '%');
