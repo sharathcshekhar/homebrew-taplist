@@ -21,7 +21,6 @@ Note: If you use this WebApp to build a taplist on a publicly hosted website, yo
 So keep in mind that this is a very weak form of security. On the other hand, the write access key is used only inside your Android App and won't be exposed.
 So the write key is a much stronger form of security. 
 
-
 # Working of the WebApp
 
 ## POST
@@ -54,3 +53,12 @@ This gives you a JSON output like this:
 	  "size": 9842,
 	  "percent_available": 33.5
 	}
+
+# Support for Beer Database
+I added support to some useful beer statistics that is being served. The purpose is to allow configuring your taplist-site to get beer information
+dynamically. Similar to keg-level info, you can create new sheet "Beers". 
+
+# Support to get Icons for Taplist
+I have also added support to get different icons for different beers on the taplist. You'll have to create these images and manually upload them to Google Drive.
+
+Stay tuned for more information
