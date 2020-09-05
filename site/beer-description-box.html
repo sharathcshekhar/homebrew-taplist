@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script>
+	var webApp = "https://script.google.com/macros/s/xxxx/exec";
+	var getDesc = "?action=getDescription&access_key=yyyy&beer=";
+
+	function padZero(v) {
+		return v < 10 ? '0' + v : v;
+	}
+
+	function formatDate(d) {
+		var dt = new Date(d);
+		var d = padZero(dt.getDate());
+		var m = padZero(dt.getMonth() + 1);
+		return m + '-' + d;
+	}
+
+	function setParameters(b) {
+		var pre = '#bd-' + b.number + '-';
+		$(pre + 'srm').append(b.srm);
+		$(pre + 'abv').append(b.abv.toFixed(1));
+		$(pre + 'og').append(Number(b.og).toFixed(3));
+		$(pre + 'hops').append(b.hops);
+		$(pre + 'brewed').append(formatDate(b.brewDate));
+		$(pre + 'ontap').append(formatDate(b.tapDate));
+	}
+	$(document).ready(function() {
+		$.ajax({
+			url: webApp + getDesc + "1"
+		}).then(function(b1) {
+			setParameters(b1);
+		});
+	});
+	</script>
+	<link href='https://fonts.googleapis.com/css?family=Fredericka+the+Great' rel='stylesheet'>
+	<style>
+	.beer-desc {
+		font-family: Fredericka the Great;
+		font-size: 120%;
+		font-weight: bold;
+		color: slate-grey;
+		line-height: 60%
+	}
+	</style>
+</head>
+
+<body>
+	<div class=beer-desc>
+		<p> <a id=bd-1-og>OG: </a>, <a id=bd-1-abv> ABV: </a>%</p>
+		<p id=bd-1-hops>Hops: </p>
+		<p id=bd-1-srm>SRM: </p>
+		<p><a id=bd-1-brewed>Brewed: </a>, <a id=bd-1-ontap>On-Tap: </a></p>
+	</div>
+	<div id=test></div>
+</body>
+
+</html>
