@@ -1,162 +1,145 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-      <script>
-      	 var webApp = "https://script.google.com/macros/s/xxxxxxxxx/exec"
-         var params = "?action=getRaw&access_key=xxxxxxxx&tap=";
-         
-         function mlToGal(ml) {
-  			return Math.round((ml/ 3780) * 100)/ 100 + 'G'
-		 }
-         
-         function padZero(v) {
-         	return v < 10 ? '0' + v : v;
-         }
-         
-         function getColorFromPercent(value){	
-    		var hue=((value)*1.5).toString(10);
-    		return ["hsl(", hue, ",65%,55%)"].join("");
-		 }
-         
-         function kegDataToStr(k) {
-         	var dt = new Date(k.date);
-            
-			var d = padZero(dt.getDate());
-			var m = padZero(dt.getMonth() + 1)
-            var mm = padZero(dt.getMinutes());
-            
-            var h = dt.getHours();
-            var ampm = h >= 12 ? 'PM' : 'AM';
-			h = h % 12;
-  			h = h ? h : 12;
-            h = padZero(h)
 
-  			date = m + '-' + d + ' ' + h + ':' + mm + ' ' + ampm;
-         	return 'Last Updated: ' + date +
-            	   '\nRemaining: ' + mlToGal(k.remaining) +
-                   '\nDispensed: ' + mlToGal(k.dispensed)
-         }
-         
-         function setParameters(k, kegNo) {
-         		var pre = '#keg' + kegNo;
-         		
-                $(pre + '-percent').append(k.percent_available + '%');
-                $(pre + '-size').append('Keg Size: ' + mlToGal(k.size));
-                $(pre + '-chart').attr('title', kegDataToStr(k)); 
-                $(pre + '-circle').attr('stroke-dasharray', k.percent_available + ' 100');
-                $(pre + '-circle').attr('stroke', getColorFromPercent(k.percent_available));
-         }
-         
-         $(document).ready(function() {
-         	$.ajax({
-         		url: webApp + params + "1"
-         	}).then(function(k1) {
-            	setParameters(k1, "1");
-         	});
-            $.ajax({
-         		url: webApp + params + "2"
-         	}).then(function(k2) {
-	            setParameters(k2, "2");
-            });
-       	});  
-       </script>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script>
+	var webApp = "https://script.google.com/macros/s/xxxxxxxxx/exec"
+	var params = "?action=getRaw&access_key=xxxxxxxx&tap=";
 
-<style>
-.flex-wrapper {
-  display: flex;
-  flex-flow: row nowrap;
-}
+	function mlToGal(ml) {
+		return Math.round((ml / 3780) * 100) / 100 + 'G'
+	}
 
-.single-chart {
-  width: 100%;
-  justify-content: space-around ;
-}
+	function padZero(v) {
+		return v < 10 ? '0' + v : v;
+	}
 
-.circular-chart {
-  display: block;
-  margin: 10px auto;
-  max-width: 80%;
-  max-height: 250px;
-}
+	function getColorFromPercent(value) {
+		var hue = ((value) * 1.5).toString(10);
+		return ["hsl(", hue, ",65%,55%)"].join("");
+	}
 
-.circle-bg {
-  fill: none;
-  stroke: #eee;
-  stroke-width: 3.8;
-}
+	function kegDataToStr(k) {
+		var dt = new Date(k.date);
+		var d = padZero(dt.getDate());
+		var m = padZero(dt.getMonth() + 1)
+		var mm = padZero(dt.getMinutes());
+		var h = dt.getHours();
+		var ampm = h >= 12 ? 'PM' : 'AM';
+		h = h % 12;
+		h = h ? h : 12;
+		h = padZero(h)
+		date = m + '-' + d + ' ' + h + ':' + mm + ' ' + ampm;
+		return 'Last Updated: ' + date + '\nRemaining: ' + mlToGal(k.remaining) + '\nDispensed: ' + mlToGal(k.dispensed)
+	}
 
-.circle {
-  fill: none;
-  stroke-width: 2.8;
-  stroke-linecap: round;
-  animation: progress 5s ease-out forwards;
-  stroke-dasharray:"0, 100";
-}
-
-@keyframes progress {
-  0% {
-    stroke-dasharray: 0 100;
-  }
-}
-
-.percentage {
-  fill: #666;
-  font-family: sans-serif;
-  font-size: 0.33em;
-  text-anchor: middle;
-}
-
-.kegsize {
-  fill: #666;
-  font-family: sans-serif;
-  font-size: 1em;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
-</style>
+	function setParameters(k, kegNo) {
+		var pre = '#keg' + kegNo;
+		$(pre + '-percent').append(k.percent_available + '%');
+		$(pre + '-size').append('Keg Size: ' + mlToGal(k.size));
+		$(pre + '-chart').attr('title', kegDataToStr(k));
+		$(pre + '-circle').attr('stroke-dasharray', k.percent_available + ' 100');
+		$(pre + '-circle').attr('stroke', getColorFromPercent(k.percent_available));
+	}
+	$(document).ready(function() {
+		$.ajax({
+			url: webApp + params + "1"
+		}).then(function(k1) {
+			setParameters(k1, "1");
+		});
+		$.ajax({
+			url: webApp + params + "2"
+		}).then(function(k2) {
+			setParameters(k2, "2");
+		});
+	});
+	</script>
+	<style>
+	.flex-wrapper {
+		display: flex;
+		flex-flow: row nowrap;
+	}
+	
+	.single-chart {
+		width: 100%;
+		justify-content: space-around;
+	}
+	
+	.circular-chart {
+		display: block;
+		margin: 10px auto;
+		max-width: 80%;
+		max-height: 250px;
+	}
+	
+	.circle-bg {
+		fill: none;
+		stroke: #eee;
+		stroke-width: 3.8;
+	}
+	
+	.circle {
+		fill: none;
+		stroke-width: 2.8;
+		stroke-linecap: round;
+		animation: progress 5s ease-out forwards;
+		stroke-dasharray: "0, 100";
+	}
+	
+	@keyframes progress {
+		0% {
+			stroke-dasharray: 0 100;
+		}
+	}
+	
+	.percentage {
+		fill: #666;
+		font-family: sans-serif;
+		font-size: 0.33em;
+		text-anchor: middle;
+	}
+	
+	.kegsize {
+		fill: #666;
+		font-family: sans-serif;
+		font-size: 1em;
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+	}
+	</style>
 </head>
 
 <body>
-<div class="flex-wrapper" id=keg1-chart>
-  <div class="single-chart">
-    <svg viewBox="0 0 36 36" class="circular-chart">
-      <path class="circle-bg"
-        d="M18 2
+	<div class="flex-wrapper" id=keg1-chart>
+		<div class="single-chart">
+			<svg viewBox="0 0 36 36" class="circular-chart">
+				<path class="circle-bg" d="M18 2
           a 16 16 0 0 1 0 32
-          a 16 16 0 0 1 0 -32"
-      />
-      <path class="circle"
-        stroke-dasharray="0, 100"
-        d="M18 2
+          a 16 16 0 0 1 0 -32" />
+				<path class="circle" stroke-dasharray="0, 100" d="M18 2
           a 16 16 0 0 1 0 32
-          a 16 16 0 0 1 0 -32"
-      	id="keg1-circle"/>
-      <text x="18" y="20.35" class="percentage" id="keg1-percent"></text>
-    </svg>
-    <text x="18" y="20.35" class="kegsize" id="keg1-size"></text>
-  </div>
-</div>
-<div class="flex-wrapper" id=keg2-chart>
-  <div class="single-chart">
-    <svg viewBox="0 0 36 36" class="circular-chart">
-      <path class="circle-bg"
-        d="M18 2
+          a 16 16 0 0 1 0 -32" id="keg1-circle" />
+				<text x="18" y="20.35" class="percentage" id="keg1-percent"></text>
+			</svg>
+			<text x="18" y="20.35" class="kegsize" id="keg1-size"></text>
+		</div>
+	</div>
+	<div class="flex-wrapper" id=keg2-chart>
+		<div class="single-chart">
+			<svg viewBox="0 0 36 36" class="circular-chart">
+				<path class="circle-bg" d="M18 2
           a 16 16 0 0 1 0 32
-          a 16 16 0 0 1 0 -32"
-      />
-      <path class="circle"
-      	stroke-dasharray="0, 100"
-        d="M18 2
+          a 16 16 0 0 1 0 -32" />
+				<path class="circle" stroke-dasharray="0, 100" d="M18 2
           a 16 16 0 0 1 0 32
-          a 16 16 0 0 1 0 -32"
-      	id="keg2-circle"/>
-      <text x="18" y="20.35" class="percentage" id="keg2-percent"></text>
-    </svg>
-    <text x="18" y="20.35" class="kegsize" id="keg2-size"></text>
-  </div>
-</div>
+          a 16 16 0 0 1 0 -32" id="keg2-circle" />
+				<text x="18" y="20.35" class="percentage" id="keg2-percent"></text>
+			</svg>
+			<text x="18" y="20.35" class="kegsize" id="keg2-size"></text>
+		</div>
+	</div>
 </body>
+
 </html>
